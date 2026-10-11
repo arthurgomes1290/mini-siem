@@ -1,0 +1,13 @@
+id: ssh_bruteforce
+name: SSH Brute Force
+type: threshold
+severity: high
+filter:
+  source_type: auth
+  event_action: login_failed
+group_by: source_ip
+window_minutes: 5
+threshold: 5
+attack:
+  tactic: TA0006        # Credential Access
+  technique: T1110      # Brute Force

@@ -1,0 +1,9 @@
+Oct 11 14:29:58 web-01 sshd[1234]: Failed password for root from 203.0.113.42 port 55110 ssh2
+Oct 11 14:29:59 web-01 sshd[1234]: Failed password for root from 203.0.113.42 port 55111 ssh2
+Oct 11 14:30:00 web-01 sshd[1234]: Failed password for invalid user admin from 198.51.100.5 port 44220 ssh2
+Oct 11 14:30:02 web-01 sshd[1235]: Accepted password for ubuntu from 10.0.0.5 port 54321 ssh2
+Oct 11 14:30:04 web-01 sshd[1240]: Accepted publickey for deploy from 10.0.0.9 port 54400 ssh2
+Oct 11 14:30:05 web-01 sudo:  ubuntu : TTY=pts/0 ; PWD=/home/ubuntu ; USER=root ; COMMAND=/bin/ls /root
+Oct 11 14:30:10 web-01 sshd[1236]: Connection closed by 192.0.2.33 port 22 [preauth]
+Oct 11 14:30:11 web-01 CRON[1240]: pam_unix(cron:session): session opened for user root(uid=0) by (uid=0)
+Oct 11 14:30:12 web-01 sudo: pam_unix(sudo:session): session opened for user root(uid=0) by ubuntu(uid=1000)

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="grid-3">
+    <div class="card">
+        <h2>Eventos (24h)</h2>
+        <div class="stat">{{ stats.event_count_24h }}</div>
+    </div>
+    <div class="card">
+        <h2>Alertas (24h)</h2>
+        <div class="stat">{{ stats.alert_count_24h }}</div>
+    </div>
+    <div class="card">
+        <h2>Críticos (24h)</h2>
+        <div class="stat severity-critical">{{ stats.critical_count_24h }}</div>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Eventos — últimos 60 min (buckets de 1 min)</h2>
+    <canvas id="timeline" height="80"></canvas>
+</div>
+
+<div class="grid">
+    <div class="card">
+        <h2>Top IPs (24h)</h2>
+        {% if stats.top_ips %}
+        <table>
+            <tr><th>IP</th><th>Eventos</th></tr>
+            {% for row in stats.top_ips %}
+            <tr><td><code>{{ row.ip }}</code></td><td>{{ row.count }}</td></tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p style="color: var(--muted)">Sem dados.</p>
+        {% endif %}
+    </div>
+    <div class="card">
+        <h2>Alertas por severidade (24h)</h2>
+        {% if stats.severity_counts %}
+        <table>
+            {% for sev in ['critical', 'high', 'medium', 'low'] %}
+                {% if stats.severity_counts.get(sev) %}
+                <tr><td class="severity-{{ sev }}">{{ sev }}</td><td>{{ stats.severity_counts[sev] }}</td></tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+        {% else %}
+        <p style="color: var(--muted)">Sem alertas.</p>
+        {% endif %}
+    </div>
+</div>
+
+<div class="card">
+    <h2>Alertas recentes</h2>
+    <div hx-get="/partials/alerts" hx-trigger="load, every 5s" hx-swap="innerHTML">
+        <p style="color: var(--muted)">carregando…</p>
+    </div>
+</div>
+
+<div class="card">
+    <h2>Eventos recentes</h2>
+    <div hx-get="/partials/events" hx-trigger="load, every 5s" hx-swap="innerHTML">
+        <p style="color: var(--muted)">carregando…</p>
+    </div>
+</div>
+
+<script>
+    (() => {
+        const timeline = {{ stats.timeline | tojson }};
+        const labels = timeline.map(x => x.bucket.slice(-5));
+        const data = timeline.map(x => x.count);
+        new Chart(document.getElementById('timeline'), {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'eventos/min',
+                    data: data,
+                    borderColor: '#58a6ff',
+                    backgroundColor: 'rgba(88, 166, 255, 0.1)',
+                    fill: true,
+                    tension: 0.2,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { labels: { color: '#c9d1d9' } } },
+                scales: {
+                    x: { ticks: { color: '#8b949e' }, grid: { color: '#30363d' } },
+                    y: { beginAtZero: true, ticks: { color: '#8b949e' }, grid: { color: '#30363d' } },
+                }
+            }
+        });
+    })();
+</script>
+
+{% endblock %}

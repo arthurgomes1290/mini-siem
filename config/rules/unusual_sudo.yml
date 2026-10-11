@@ -1,0 +1,13 @@
+id: unusual_sudo
+name: Sudo by Unusual User
+type: rarity
+severity: high
+filter:
+  source_type: auth
+  event_action: sudo
+group_by: user_name
+baseline_days: 7
+max_historical_count: 0   # usuário NUNCA usou sudo nos últimos 7 dias
+attack:
+  tactic: TA0004        # Privilege Escalation
+  technique: T1548.003  # Sudo and Sudo Caching

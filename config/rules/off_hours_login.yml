@@ -1,0 +1,13 @@
+id: off_hours_login
+name: Login Outside Business Hours
+type: time_of_day
+severity: medium
+filter:
+  source_type: auth
+  event_action: login_success
+group_by: user_name
+allowed_hours: [8, 18]   # 08:00 inclusive → 18:00 exclusive (horário local)
+timezone: America/Sao_Paulo
+attack:
+  tactic: TA0001        # Initial Access
+  technique: T1078      # Valid Accounts

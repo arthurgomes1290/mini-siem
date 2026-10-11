@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}mini-siem{% endblock %}</title>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --panel: #161b22;
+            --border: #30363d;
+            --fg: #c9d1d9;
+            --accent: #58a6ff;
+            --muted: #8b949e;
+            --crit: #e74c3c;
+            --high: #e67e22;
+            --med:  #f1c40f;
+            --low:  #3498db;
+        }
+        * { box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 1200px; margin: 0 auto; padding: 20px;
+            background: var(--bg); color: var(--fg);
+        }
+        header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px; }
+        h1, h2 { color: var(--accent); margin: 0 0 10px; }
+        h1 { font-size: 1.6em; }
+        h2 { font-size: 1em; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .card { background: var(--panel); padding: 16px; border-radius: 6px; border: 1px solid var(--border); margin-bottom: 16px; }
+        .stat { font-size: 2.2em; font-weight: 700; color: var(--fg); line-height: 1.1; }
+        .stat-label { color: var(--muted); font-size: 0.85em; }
+        .severity-critical { color: var(--crit); font-weight: 600; }
+        .severity-high     { color: var(--high); font-weight: 600; }
+        .severity-medium   { color: var(--med); }
+        .severity-low      { color: var(--low); }
+        table { width: 100%; border-collapse: collapse; font-size: 0.9em; }
+        th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid var(--border); }
+        th { color: var(--muted); font-weight: 500; text-transform: uppercase; font-size: 0.75em; letter-spacing: 0.5px; }
+        code { background: #1c2128; padding: 1px 5px; border-radius: 3px; font-size: 0.9em; }
+        footer { color: var(--muted); font-size: 0.8em; margin-top: 20px; text-align: center; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🔒 mini-siem</h1>
+        <span class="stat-label">dashboard · atualiza a cada 5s</span>
+    </header>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+    <footer>portfolio build · <a style="color: var(--muted)" href="/api/stats">/api/stats</a></footer>
+</body>
+</html>

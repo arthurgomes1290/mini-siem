@@ -1,0 +1,19 @@
+id: login_after_failures
+name: Successful Login After Multiple Failures
+type: sequence
+severity: critical
+precondition:
+  filter:
+    source_type: auth
+    event_action: login_failed
+  group_by: source_ip
+  window_minutes: 10
+  min_count: 3
+trigger:
+  filter:
+    source_type: auth
+    event_action: login_success
+  group_by: source_ip
+attack:
+  tactic: TA0001        # Initial Access
+  technique: T1110.001  # Password Guessing

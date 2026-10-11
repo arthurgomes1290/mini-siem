@@ -1,0 +1,12 @@
+services:
+  siem:
+    build: .
+    container_name: mini-siem
+    env_file:
+      - .env
+    volumes:
+      - ./data:/data
+    # Mantém o container de pé mesmo com CMD curto, para `docker compose exec`
+    # funcionar nas etapas iniciais. Depois vira um daemon real (etapa 3+).
+    command: ["sleep", "infinity"]
+    restart: unless-stopped
